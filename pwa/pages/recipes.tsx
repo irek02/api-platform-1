@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
+import { getStars } from '../misc/util';
 
 const RecipesPage = () => {
   const [recipes, setRecipes] = useState<any[]>([]);
@@ -10,9 +12,9 @@ const RecipesPage = () => {
     const data = await new Promise<any[]>((resolve) => {
       setTimeout(() => {
         resolve([
-          { id: 1, title: 'Spaghetti Carbonara', description: 'A classic Italian pasta dish.' },
-          { id: 2, title: 'Chicken Curry', description: 'A spicy and flavorful dish.' },
-          { id: 3, title: 'Beef Stroganoff', description: 'A rich and creamy beef dish.' },
+          { id: 1, title: 'Spaghetti Carbonara', description: 'A classic Italian pasta dish.', averageRating: 4.5 },
+          { id: 2, title: 'Chicken Curry', description: 'A spicy and flavorful dish.', averageRating: 4.0 },
+          { id: 3, title: 'Beef Stroganoff', description: 'A rich and creamy beef dish.', averageRating: 4.2 },
         ]);
       }, 1000);
     });
@@ -56,7 +58,11 @@ const RecipesPage = () => {
               <li key={recipe.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
                 <div className="p-4">
                   <div className="flex justify-between items-center mb-2">
-                    <h3 className="text-xl font-semibold">{recipe.title}</h3>
+                    <h3 className="text-xl font-semibold">
+                      <Link href={`/recipes/${recipe.id}`}>
+                        {recipe.title}
+                      </Link>
+                    </h3>
                     <div className="flex space-x-2">
                       <button
                         onClick={() => editRecipe(recipe.id)}
@@ -73,6 +79,7 @@ const RecipesPage = () => {
                     </div>
                   </div>
                   <p className="text-gray-700">{recipe.description}</p>
+                  <p>{getStars(recipe.averageRating)} {recipe.averageRating}</p>
                 </div>
               </li>
             ))}
