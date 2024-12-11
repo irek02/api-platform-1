@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { getStars } from '../misc/util';
+import Header from '../components/common/Header';
 
 const RecipesPage = () => {
   const [recipes, setRecipes] = useState<any[]>([]);
@@ -41,12 +42,9 @@ const RecipesPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <header className="bg-green-600 text-white p-4">
-        <h1 className="text-3xl font-bold text-center">Recipe App</h1>
-      </header>
-      <main className="container mx-auto p-4">
-        <h2 className="text-2xl font-bold mb-4">Recipes</h2>
+    <div className="min-h-screen flex flex-col bg-gray-100">
+      <Header />
+      <main className="container mx-auto p-4 flex-grow">
         {loading ? (
           <div className="text-center">
             <div className="loader border-t-4 border-blue-500 rounded-full w-16 h-16 mx-auto my-8 animate-spin"></div>

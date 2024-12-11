@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { getStars } from '../../misc/util';
+import Header from '../../components/common/Header';
+import Link from 'next/link';
 
 const RecipePage = () => {
   const router = useRouter();
@@ -61,12 +63,14 @@ const RecipePage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <header className="bg-green-600 text-white p-4">
-        <h1 className="text-3xl font-bold text-center">{recipe.title}</h1>
-      </header>
-      <main className="container mx-auto p-4">
-        <p className="text-gray-700 mb-4">{recipe.description}</p>
+    <div className="min-h-screen flex flex-col bg-gray-100">
+      <Header />
+      <main className="container mx-auto p-4 flex-grow">
+        <Link href="/recipes" className="text-blue-500 underline mb-4 inline-block">
+          ← Back to Recipes
+        </Link>
+        <h1 className="text-3xl font-bold">{recipe.title}</h1>
+        <p className="text-gray-700">{recipe.description}</p>
         <p>{getStars(recipe.averageRating)} {recipe.averageRating}</p>
         <h2 className="text-2xl font-bold mt-8 mb-4">Reviews</h2>
         <ul>

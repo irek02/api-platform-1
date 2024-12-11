@@ -1,5 +1,7 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import Header from '../../../components/common/Header';
+import Link from 'next/link';
 
 const EditRecipePage = () => {
   const router = useRouter();
@@ -53,11 +55,12 @@ const EditRecipePage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <header className="bg-green-600 text-white p-4">
-        <h1 className="text-3xl font-bold text-center">Edit Recipe</h1>
-      </header>
-      <main className="container mx-auto p-4">
+    <div className="min-h-screen flex flex-col bg-gray-100">
+      <Header />
+      <main className="container mx-auto p-4 flex-grow">
+        <Link href="/recipes" className="text-blue-500 underline mb-4 inline-block">
+          ← Back to Recipes
+        </Link>
         <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">
           <div className="mb-4">
             <label htmlFor="title" className="block text-gray-700 font-bold mb-2">
