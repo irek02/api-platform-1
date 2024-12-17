@@ -10,16 +10,9 @@ const RecipesPage = () => {
   const router = useRouter();
 
   const fetchRecipes = async () => {
-    const data = await new Promise<any[]>((resolve) => {
-      setTimeout(() => {
-        resolve([
-          { id: 1, title: 'Spaghetti Carbonara', description: 'A classic Italian pasta dish.', averageRating: 4.5 },
-          { id: 2, title: 'Chicken Curry', description: 'A spicy and flavorful dish.', averageRating: 4.0 },
-          { id: 3, title: 'Beef Stroganoff', description: 'A rich and creamy beef dish.', averageRating: 4.2 },
-        ]);
-      }, 1000);
-    });
-    setRecipes(data);
+    const req = await fetch('https://localhost/recipes');
+    const data = await req.json();
+    setRecipes(data.member);
     setLoading(false);
   };
 
@@ -45,6 +38,11 @@ const RecipesPage = () => {
     <div className="min-h-screen flex flex-col bg-gray-100">
       <Header />
       <main className="container mx-auto p-4 flex-grow">
+        <div className="flex justify-end mb-4">
+          <Link href="/recipes/add" className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+            Add Recipe
+          </Link>
+        </div>
         {loading ? (
           <div className="text-center">
             <div className="loader border-t-4 border-blue-500 rounded-full w-16 h-16 mx-auto my-8 animate-spin"></div>

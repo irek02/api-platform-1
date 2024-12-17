@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /** A recipe. */
@@ -35,6 +36,11 @@ class Recipe
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getReviews(): iterable
+    {
+        return $this->reviews;
     }
 
     public function getAverageRating(): float

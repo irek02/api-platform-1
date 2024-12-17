@@ -15,29 +15,15 @@ const RecipePage = () => {
     if (id) {
       // Simulate fetching the recipe data
       const fetchRecipe = async () => {
-        const recipeData = await new Promise<any>((resolve) => {
-          setTimeout(() => {
-            resolve({
-              id,
-              title: 'Sample Recipe Title',
-              description: 'Sample Recipe Description',
-              averageRating: 4.5,
-            });
-          }, 1000);
-        });
+        const req = await fetch(`https://localhost/recipes/${id}`);
+        const recipeData = await req.json();
         setRecipe(recipeData);
       };
 
       // Simulate fetching the reviews data
       const fetchReviews = async () => {
-        const reviewsData = await new Promise<any[]>((resolve) => {
-          setTimeout(() => {
-            resolve([
-              { author: 'John Doe', description: 'Great recipe!', rating: 5 },
-              { author: 'Jane Smith', description: 'Pretty good.', rating: 4 },
-            ]);
-          }, 1000);
-        });
+        const req = await fetch(`https://localhost/recipes/${id}/reviews`);
+        const reviewsData = await req.json();
         setReviews(reviewsData);
       };
 
@@ -73,6 +59,7 @@ const RecipePage = () => {
         <p className="text-gray-700">{recipe.description}</p>
         <p>{getStars(recipe.averageRating)} {recipe.averageRating}</p>
         <h2 className="text-2xl font-bold mt-8 mb-4">Reviews</h2>
+
         <ul>
           {reviews.map((review: any, index: any) => (
             <li key={index} className="bg-white rounded-lg shadow-lg p-4 mb-4">
