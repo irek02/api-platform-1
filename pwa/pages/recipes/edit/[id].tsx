@@ -9,21 +9,16 @@ const EditRecipePage = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [loading, setLoading] = useState(true);
+  const [submitLoading, setSubmitLoading] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     if (id) {
-      // Simulate fetching the recipe data
       const fetchRecipe = async () => {
-        const data = await new Promise<{ title: string; description: string }>((resolve) => {
-          setTimeout(() => {
-            resolve({
-              title: 'Sample Recipe Title',
-              description: 'Sample Recipe Description',
-            });
-          }, 1000);
-        });
-        setTitle(data.title);
-        setDescription(data.description);
+        const req = await fetch(`https://localhost/recipes/${id}`);
+        const recipeData = await req.json();
+        setTitle(recipeData.title);
+        setDescription(recipeData.description);
         setLoading(false);
       };
 
@@ -33,13 +28,19 @@ const EditRecipePage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    // Simulate an API call to edit the recipe
-    await new Promise<void>((resolve) => {
-      setTimeout(() => {
-        resolve();
-      }, 1000);
+    setSubmitLoading(true);
+    const req = await fetch(`https://localhost/recipes/${id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/merge-patch+json',
+      },
+      body: JSON.stringify({ title, description }),
     });
+    if (!req.ok) {
+      setSubmitLoading(false);
+      setError('Something went wrong. Please try again.');
+      return;
+    }
     router.push('/recipes');
   };
 
@@ -87,10 +88,12 @@ const EditRecipePage = () => {
               required
             />
           </div>
+          {error && <div className="text-red-500 mb-4">{error}</div>}
           <div className="flex justify-end">
             <button
               type="submit"
               className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+              disabled={submitLoading}
             >
               Save
             </button>

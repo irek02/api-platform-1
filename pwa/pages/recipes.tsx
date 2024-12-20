@@ -74,7 +74,6 @@ const RecipesPage = () => {
                       </button>
                     </div>
                   </div>
-                  <p className="text-gray-700">{recipe.description}</p>
                   <p>{getStars(recipe.averageRating)} {recipe.averageRating}</p>
                 </div>
               </li>

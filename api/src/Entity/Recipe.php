@@ -56,6 +56,6 @@ class Recipe
             $totalRating += $review->getRating();
         }
 
-        return $totalRating / $reviewCount;
+        return round($totalRating / $reviewCount, 2);
     }
 }
