@@ -91,10 +91,11 @@ const RecipePage = () => {
           ← Back to Recipes
         </Link>
         <h1 className="text-3xl font-bold">{recipe.title}</h1>
-        <p className="text-gray-700">{recipe.description}</p>
         <p>{getStars(recipe.averageRating)} {recipe.averageRating}</p>
+        <p className="text-gray-700" style={{ whiteSpace: 'pre-wrap' }}>
+          {recipe.description}
+        </p>
         <h2 className="text-2xl font-bold mt-8 mb-4">Reviews</h2>
-
         <ul>
           {reviews.map((review: any, index: any) => (
             <li key={index} className="bg-white rounded-lg shadow-lg p-4 mb-4">
