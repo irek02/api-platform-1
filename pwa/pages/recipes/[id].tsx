@@ -1,9 +1,7 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { getStars } from '../../misc/util';
-import Header from '../../components/common/Header';
 import Link from 'next/link';
-import Footer from '../../components/common/Footer';
 
 const RecipePage = () => {
   const router = useRouter();
@@ -72,7 +70,12 @@ const RecipePage = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
-      <Header />
+      <header className="bg-green-600 text-white p-4 relative">
+        <div className="relative z-10 container px-4 mx-auto">
+          <h1 className="text-4xl font-extrabold drop-shadow-lg">🍲 Recipe App 🍲</h1>
+          <p className="mt-2 text-lg"><span className="italic">Discover and share your favorite recipes!</span> 🥗🍰🍝</p>
+        </div>
+      </header>
       <main className="container mx-auto p-4 flex-grow">
         <Link href="/recipes" className="text-blue-500 underline mb-4 inline-block">
           ← Back to Recipes
@@ -131,7 +134,9 @@ const RecipePage = () => {
           <button type="submit" className="bg-blue-500 text-white p-2 rounded">Submit</button>
         </form>
       </main>
-      <Footer />
+      <footer className="bg-green-600 text-white p-4 text-center">
+        <p>&copy; 2023 Recipe App. All rights reserved.</p>
+      </footer>
     </div>
   );
 };

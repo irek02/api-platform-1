@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { getStars } from '../misc/util';
-import Header from '../components/common/Header';
-import Footer from '../components/common/Footer';
 
 const RecipesPage = () => {
   const [recipes, setRecipes] = useState<any[]>([]);
@@ -32,7 +30,12 @@ const RecipesPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
-      <Header />
+      <header className="bg-green-600 text-white p-4 relative">
+        <div className="relative z-10 container px-4 mx-auto">
+          <h1 className="text-4xl font-extrabold drop-shadow-lg">🍲 Recipe App 🍲</h1>
+          <p className="mt-2 text-lg"><span className="italic">Discover and share your favorite recipes!</span> 🥗🍰🍝</p>
+        </div>
+      </header>
       <main className="container mx-auto p-4 flex-grow">
         <div className="flex justify-end mb-4">
           <Link href="/recipes/add" className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
@@ -68,7 +71,9 @@ const RecipesPage = () => {
           ))}
         </ul>
       </main>
-      <Footer />
+      <footer className="bg-green-600 text-white p-4 text-center">
+        <p>&copy; 2023 Recipe App. All rights reserved.</p>
+      </footer>
     </div>
   );
 };
