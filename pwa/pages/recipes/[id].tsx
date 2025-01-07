@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { getStars } from '../../misc/util';
 import Header from '../../components/common/Header';
 import Link from 'next/link';
+import Footer from '../../components/common/Footer';
 
 const RecipePage = () => {
   const router = useRouter();
@@ -10,8 +11,6 @@ const RecipePage = () => {
   const [newReview, setNewReview] = useState({ author: '', rating: '', body: '' });
   const [recipe, setRecipe] = useState<any>(null);
   const [reviews, setReviews] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
 
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
@@ -52,10 +51,6 @@ const RecipePage = () => {
       }),
     });
 
-    if (!response.ok) {
-      setError('Something went wrong. Please try again.');
-    }
-
     return await response.json();
   };
 
@@ -65,22 +60,14 @@ const RecipePage = () => {
       const fetchData = async () => {
         await fetchRecipe();
         await fetchReviews();
-        setLoading(false);
       };
 
       fetchData();
     }
   }, [id]);
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="text-center">
-          <div className="loader border-t-4 border-blue-500 rounded-full w-16 h-16 mx-auto my-8 animate-spin"></div>
-          <p>Loading recipe...</p>
-        </div>
-      </div>
-    );
+  if (!recipe) {
+    return <div>Loading...</div>;
   }
 
   return (
@@ -91,7 +78,7 @@ const RecipePage = () => {
           ← Back to Recipes
         </Link>
         <h1 className="text-3xl font-bold">{recipe.title}</h1>
-        <p>{getStars(recipe.averageRating)} {recipe.averageRating}</p>
+        <p className="m-4">{getStars(recipe.averageRating)} {recipe.averageRating}</p>
         <p className="text-gray-700" style={{ whiteSpace: 'pre-wrap' }}>
           {recipe.description}
         </p>
@@ -141,15 +128,10 @@ const RecipePage = () => {
               required
             />
           </div>
-          <div className="mb-4 flex">
-            {error && <p className="text-red-500">{error}</p>}
-          </div>
           <button type="submit" className="bg-blue-500 text-white p-2 rounded">Submit</button>
         </form>
       </main>
-      <footer className="bg-green-600 text-white p-4 text-center">
-        <p>&copy; 2023 Recipe App. All rights reserved.</p>
-      </footer>
+      <Footer />
     </div>
   );
 };

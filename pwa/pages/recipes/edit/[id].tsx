@@ -2,15 +2,13 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Header from '../../../components/common/Header';
 import Link from 'next/link';
+import Footer from '../../../components/common/Footer';
 
 const EditRecipePage = () => {
   const router = useRouter();
   const { id } = router.query;
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [loading, setLoading] = useState(true);
-  const [submitLoading, setSubmitLoading] = useState(false);
-  const [error, setError] = useState('');
 
   useEffect(() => {
     if (id) {
@@ -19,7 +17,6 @@ const EditRecipePage = () => {
         const recipeData = await req.json();
         setTitle(recipeData.title);
         setDescription(recipeData.description);
-        setLoading(false);
       };
 
       fetchRecipe();
@@ -28,7 +25,6 @@ const EditRecipePage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitLoading(true);
     const req = await fetch(`https://localhost/recipes/${id}`, {
       method: 'PATCH',
       headers: {
@@ -36,24 +32,8 @@ const EditRecipePage = () => {
       },
       body: JSON.stringify({ title, description }),
     });
-    if (!req.ok) {
-      setSubmitLoading(false);
-      setError('Something went wrong. Please try again.');
-      return;
-    }
     router.push('/recipes');
   };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="text-center">
-          <div className="loader border-t-4 border-blue-500 rounded-full w-16 h-16 mx-auto my-8 animate-spin"></div>
-          <p>Loading recipe...</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
@@ -88,21 +68,17 @@ const EditRecipePage = () => {
               required
             />
           </div>
-          {error && <div className="text-red-500 mb-4">{error}</div>}
           <div className="flex justify-end">
             <button
               type="submit"
               className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-              disabled={submitLoading}
             >
               Save
             </button>
           </div>
         </form>
       </main>
-      <footer className="bg-green-600 text-white p-4 text-center">
-        <p>&copy; 2023 Recipe App. All rights reserved.</p>
-      </footer>
+      <Footer />
     </div>
   );
 };

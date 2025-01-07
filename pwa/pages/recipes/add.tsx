@@ -2,33 +2,23 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import Header from '../../components/common/Header';
 import Link from 'next/link';
+import Footer from '../../components/common/Footer';
 
 const AddRecipePage = () => {
   const router = useRouter();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-      const req = await fetch('https://localhost/recipes', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/ld+json',
-        },
-        body: JSON.stringify({ title, description }),
-      });
-
-      if (!req.ok) {
-        setError('Something went wrong. Please try again.');
-        setLoading(false);
-        return;
-      }
-
-      router.push('/recipes');
-
+    const req = await fetch('https://localhost/recipes', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/ld+json',
+      },
+      body: JSON.stringify({ title, description }),
+    });
+    router.push('/recipes');
   };
 
   return (
@@ -64,23 +54,17 @@ const AddRecipePage = () => {
               required
             />
           </div>
-          <div className="mb-4 flex justify-end">
-            {error && <p className="text-red-500">{error}</p>}
-          </div>
           <div className="flex justify-end">
             <button
               type="submit"
               className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-              disabled={loading}
             >
-              {loading ? 'Saving...' : 'Save'}
+              Save
             </button>
           </div>
         </form>
       </main>
-      <footer className="bg-green-600 text-white p-4 text-center">
-        <p>&copy; 2023 Recipe App. All rights reserved.</p>
-      </footer>
+      <Footer />
     </div>
   );
 };
