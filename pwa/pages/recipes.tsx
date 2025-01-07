@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { getStars } from '../misc/util';
 
 const RecipesPage = () => {
   const [recipes, setRecipes] = useState<any[]>([]);
@@ -79,3 +78,10 @@ const RecipesPage = () => {
 };
 
 export default RecipesPage;
+
+export const getStars = (rating: number) => {
+  const roundedRating = Math.floor(rating);
+  const filledStars = '★'.repeat(roundedRating);
+  const emptyStars = '☆'.repeat(5 - roundedRating);
+  return filledStars + emptyStars;
+};

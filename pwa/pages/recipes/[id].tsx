@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { getStars } from '../../misc/util';
 import Link from 'next/link';
+import { getStars } from '../recipes';
 
 const RecipePage = () => {
   const router = useRouter();
